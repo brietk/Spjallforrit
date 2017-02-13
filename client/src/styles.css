@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+html
+{
+   font-family: Tahoma;
+   margin-left: 100px;
+   margin-top: 100px;
+   background-color: pink;
+}
+h1{
+    color: deeppink;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

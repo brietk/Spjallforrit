@@ -1,0 +1,10 @@
+{{room}}
+
+  <button type="button" (click)="partRoom()">
+    Leave chat
+  </button>
+
+<h1>Users in room:</h1>
+  <li *ngFor="let user of users">
+        {{user}}
+</li>
