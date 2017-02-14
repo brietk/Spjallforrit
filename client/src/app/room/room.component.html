@@ -5,6 +5,16 @@
   </button>
 
 <h1>Users in room:</h1>
-  <li *ngFor="let user of users">
-        {{user}}
+<li *ngFor="let user of userList">
+    {{user}}
 </li>
+
+<h1>Messages:</h1>
+<li *ngFor="let msg of obMsgs">
+    [{{msg.nick}} {{msg.timestamp | date:'hh:mm:ss'}}]  {{msg.message}}
+</li>
+<br /><br />
+<input type="text" [(ngModel)]="textMessage" />
+<button type="button" (click)="SendMessage()">
+  Send message
+</button>

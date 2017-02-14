@@ -16,7 +16,7 @@
 -->
 
 <h4>
-  These are available chatrooms. Feel free to join one :)
+  These are available chatrooms. Feel free to join and chat.
 </h4>
 <li *ngFor="let room of rooms">
     <a [routerLink]="['/room', room]">
@@ -30,13 +30,13 @@
   To open a new chatroom, type room name and press "Join new room".
 </h4>
 
- <input type="text" [(ngModel)]="roomName" />
+ <input type="text" #roomname placeholder="Name of new chatroom" [(ngModel)]="roomName" />
   <button type="button" (click)="OnJoin()">
     Join new room
   </button>
 
 <hr />
-<h4>Users currently logged in</h4>
+<h4>Users currently logged in Chat World</h4>
 
 <table>
   <tr *ngFor="let user of users">

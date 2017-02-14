@@ -10,18 +10,39 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class RoomComponent implements OnInit {
 
   room: string;
+  textMessage : string;
 
   userList : string[];
+  messages : string[];
+  obMsgs : Object[];
 
   constructor(private chatService: ChatService,
               private router: Router,
               private route: ActivatedRoute) {}
 
+  UpdateChat(chats)
+  {
+    /*
+    console.log("Msg: "+ chats);
+    for (let entry of chats) {
+      console.log("GG:" +entry.message); // 1, "string", false
+    }
+    let a = chats;
+    this.obMsgs = a;
+*/
+    //this.obMsgs = chats;
+    //if(strs != undefined && strs != "" )
+    //{
+     // this.obMsgs = strs;
+      //console.log('Messages:' + this.messages);
+    //}
+  }
+
   ngOnInit() {
     console.log("þetta fer þangað"+this.route.snapshot.params['id'] );
      let id = this.route.snapshot.params['id'];
      this.room = id;
-     this.chatService.joinRoom(this.room).subscribe(objResponse => {
+     this.chatService.joinRoom(this.room, this.UpdateChat).subscribe(objResponse => {
      // if (succeeded == true) {
         //console.log("Succeeded in roomlist.component!");
 
@@ -36,14 +57,18 @@ export class RoomComponent implements OnInit {
           // Hér erum við með lista af notendum í tilteknu herbergi
 
           console.log("Work with object");
-         // this.userList = objResponse;
-         console.log(objResponse[1].username);
-          for (let entry of objResponse) {
-            console.log(entry.username);
-          }
+          this.userList = [];
+         
+          for (var k in objResponse) {
+              if (objResponse.hasOwnProperty(k)) {
+                  this.userList.push(k);
+                  console.log('key is: ' + k + ', value is: ' + objResponse[k]);
+              }
+          }          
         }
-      //}
+        
     });
+    this.SendMessage("Hæ, hvað er að frétta?");
   }
 
   partRoom() {
@@ -53,5 +78,22 @@ export class RoomComponent implements OnInit {
     })
     this.router.navigate(["/rooms"]);
 
+  }
+
+  SendMessage(text : string) {
+    if(text == undefined)
+      text = this.textMessage;
+
+    console.log("Sending: " + text);
+    this.chatService.sendMsg(text, this.room, this.UpdateChat).subscribe(messageHistory => {
+
+      for (let entry of messageHistory) {
+        console.log("GG:" +entry.message); // 1, "string", false
+      }
+      
+      this.obMsgs = messageHistory;
+      this.textMessage = "";
+      // gera eitthvað
+    });
   }
 }

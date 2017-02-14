@@ -45,6 +45,10 @@ export class ChatService {
 
      return obs;
    }
+   
+   lst['briet'] = 'briet'
+   lst['gg'] = 'gg'
+   lst['kk'] = 'kk'
 */
    getRoomList() : Observable<string[]> {
      let obs = new Observable(observer => {
@@ -52,7 +56,9 @@ export class ChatService {
        this.socket.on("roomlist", (lst) => {
          let strArr: string[] = [];
          for (var x in lst){
-           strArr.push(x);
+           if(lst.hasOwnProperty(x)){
+             strArr.push(x);
+           }
          }
          observer.next(strArr);
        })
@@ -74,7 +80,7 @@ export class ChatService {
      return obs;
    }
 
-   joinRoom(roomname : string) : Observable<any> {
+   joinRoom(roomname : string, fn : any) : Observable<any> {
      console.log("inni í joinroom");
 
       interface RoomObj {
@@ -100,6 +106,15 @@ export class ChatService {
         });
         this.socket.on("updatechat", function(room, messageHistory){
           console.log("updatechat: " + room + " " + messageHistory );
+
+         let strArr: string[] = [];
+         for (var x in messageHistory){
+           if(messageHistory.hasOwnProperty(x)){
+             strArr.push(x);
+           }
+         }
+          fn(strArr);
+          //observer.next(strArr);
         });
         this.socket.on("updateusers", function(room, users, ops){
           console.log("updateusers: " + room + users + ops);
@@ -110,6 +125,36 @@ export class ChatService {
      return o;
    }
 
+ sendMsg(text : string, roomname : string, fn : any) : Observable<any> {
+     console.log("sendi message");
+     
+      interface MsgObj {
+        msg : string;
+        roomName : string;
+      }
+      var obj : MsgObj = { msg: text, roomName: roomname}
+      console.log("Sending obj: "+obj);
+
+      let o = new Observable(observer => {
+        this.socket.emit("sendmsg", obj);
+        this.socket.on("updatechat", function(room, messageHistory){
+          observer.next(messageHistory);
+          console.log("updatechat: " + room + " " + messageHistory );
+
+          let obMsg = [];
+          for (let entry of messageHistory) {
+            obMsg.push(entry);
+            console.log(entry); // 1, "string", false
+          }
+
+          fn(obMsg);
+          //this.socket.next(messageHistory);
+          //observer.next(strArr);
+        });
+    });
+
+     return o;
+   }
    leaveRoom(room: string) : Observable<string> {
      let observable = new Observable(observer => {
       this.socket.emit("partroom", room);
