@@ -14,9 +14,7 @@ export class RoomlistComponent implements OnInit {
 
   rooms: string[];
   users: string[];
-  
   joined: boolean;
-
 
   ngOnInit() {
     this.chatService.getUserList().subscribe(llst => {

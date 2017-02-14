@@ -10,12 +10,12 @@ import { NgForm } from "@angular/forms";
 })
 export class LoginComponent implements OnInit {
 
-  userName : string = "";
-  loginFailed : boolean = false;
+  userName: string = "";
+  loginFailed: boolean = false;
   userInfo: any;
   isAdmin: boolean;
 
-  constructor(private chatService : ChatService, private router: Router) { 
+  constructor(private chatService : ChatService, private router: Router) {
     this.isAdmin = true;
   }
 
@@ -29,10 +29,11 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     this.chatService.login(this.userName).subscribe(succeeded => {
+      console.log("Success!");
       this.loginFailed = !succeeded;
-      if (succeeded == true) {
+      if (succeeded === true) {
         this.router.navigate(["/rooms"])
-      }     
+      }
     });
   }
 

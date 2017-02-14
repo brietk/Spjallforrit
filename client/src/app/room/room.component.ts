@@ -13,8 +13,8 @@ export class RoomComponent implements OnInit {
 
   userList : string[];
 
-  constructor(private chatService: ChatService, 
-              private router: Router, 
+  constructor(private chatService: ChatService,
+              private router: Router,
               private route: ActivatedRoute) {}
 
   ngOnInit() {
@@ -42,7 +42,7 @@ export class RoomComponent implements OnInit {
             console.log(entry.username);
           }
         }
-      //}     
+      //}
     });
   }
 

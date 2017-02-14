@@ -15,10 +15,11 @@ export class ChatService {
     });
    }
 
-//þetta fall hjúpar samskiptin við bakendann. 
+//þetta fall hjúpar samskiptin við bakendann.
    login(userName: string) : Observable<boolean> {
      let observable = new Observable(observer => {
       this.socket.emit("adduser", userName, succeeded => {
+        console.log("Reply recieved");
        observer.next(succeeded);
        console.log("userAdded: " + userName);
       });
@@ -36,7 +37,7 @@ export class ChatService {
            if(lst.hasOwnProperty(x)){
              strArr.push(x);
            }
-           
+
          }
          observer.next(strArr);
        })
@@ -75,7 +76,7 @@ export class ChatService {
 
    joinRoom(roomname : string) : Observable<any> {
      console.log("inni í joinroom");
-     
+
       interface RoomObj {
         room : string;
         pass : string;
@@ -91,7 +92,7 @@ export class ChatService {
             console.log("joinroom succeeded");
           else
             console.log("joinroom not succeeded: " + reason);
-            
+
         });
         this.socket.on("servermessage", function( text, room, username){
           console.log("New Servermessage: " + text + " " + room + " " + username );
