@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ChatService } from "../chat.service";
-import { Router } from "@angular/router";
-import { NgForm } from "@angular/forms";
+import { ChatService } from '../chat.service';
+import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +10,12 @@ import { NgForm } from "@angular/forms";
 })
 export class LoginComponent implements OnInit {
 
-  userName: string = "";
-  loginFailed: boolean = false;
+  userName: string;
+  loginFailed: boolean;
   userInfo: any;
   isAdmin: boolean;
 
-  constructor(private chatService : ChatService, private router: Router) {
+  constructor(private chatService: ChatService, private router: Router) {
     this.isAdmin = true;
   }
 
@@ -29,15 +29,15 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     this.chatService.login(this.userName).subscribe(succeeded => {
-      console.log("Success!");
+      console.log('Success!');
       this.loginFailed = !succeeded;
       if (succeeded === true) {
-        this.router.navigate(["/rooms"])
+        this.router.navigate(['/rooms']);
       }
     });
   }
 
-  onSubmit(form : NgForm) {
+  onSubmit(form: NgForm) {
     console.log(form.value.userName);
   }
 
