@@ -6,8 +6,8 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RoomlistComponent } from './roomlist/roomlist.component';
 import { RoomComponent } from './room/room.component';
-import { ChatService } from "./chat.service";
-import { RouterModule } from "@angular/router";
+import { ChatService } from './chat.service';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -21,17 +21,20 @@ import { RouterModule } from "@angular/router";
     FormsModule,
     HttpModule,
     RouterModule.forRoot([{
-      path: "",
-      redirectTo: "login",
-      pathMatch: "full"
-    },{
-      path: "login",
+      path: '',
+      redirectTo: 'login',
+      pathMatch: 'full'
+    },
+    {
+      path: 'login',
       component: LoginComponent
-    },{
-      path: "rooms",
+    },
+    {
+      path: 'rooms',
       component: RoomlistComponent
-    },{
-      path: "room/:id",
+    },
+    {
+      path: 'room/:id',
       component: RoomComponent
       }])
   ],
