@@ -36,7 +36,7 @@ import { RouterModule } from '@angular/router';
     {
       path: 'room/:id',
       component: RoomComponent
-      }])
+    }])
   ],
   providers: [ChatService],
   bootstrap: [AppComponent]

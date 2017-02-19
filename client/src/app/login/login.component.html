@@ -1,29 +1,8 @@
 <div id="divID">
-	<input  [(ngModel)]="userName" #nickname placeholder="Nickname" autocomplete="off" autofocus value="" required>
-	<button (click)="onLogin()">Login</button>
+  <input [(ngModel)]="userName" #nickname placeholder="Nickname" autocomplete="off" autofocus value="" required>
+  <button (click)="onLogin()">Login</button>
 </div>
 
 <div *ngIf="loginFailed">
   Sorry, this username is already taken
 </div>
-
-<!--
-<form #f="ngForm">
-  <label for="userName">User name: </label>
-  <input name="userName" required
-  id="userName"
-  [(ngModel)]="userName" />
-  <button type="button" (click)="onSubmit(f)">
-    Save
-  </button>
-</form>
-
-
-<button (click)="onClickAddUser()">
-  Add user
-</button>
-
-<button *ngIf="isAdmin" (click)="deleteUser()">
-  Remove user from room
-</button>
--->

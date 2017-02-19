@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../chat.service';
 import { Router } from '@angular/router';
+import { AppComponent } from '../app.component';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -15,12 +16,14 @@ export class LoginComponent implements OnInit {
   userInfo: any;
   isAdmin: boolean;
 
-  constructor(private chatService: ChatService, private router: Router) {
+  constructor(private chatService: ChatService,
+    private router: Router,
+    private appComponent: AppComponent) {
     this.isAdmin = true;
   }
 
   onClickAddUser() {
-  this.isAdmin = !this.isAdmin;
+    this.isAdmin = !this.isAdmin;
   }
 
   ngOnInit() {
@@ -32,13 +35,9 @@ export class LoginComponent implements OnInit {
       console.log('Success!');
       this.loginFailed = !succeeded;
       if (succeeded === true) {
+        this.appComponent.globalUserName = this.userName;
         this.router.navigate(['/rooms']);
       }
     });
   }
-
-  onSubmit(form: NgForm) {
-    console.log(form.value.userName);
-  }
-
 }

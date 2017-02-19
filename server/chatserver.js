@@ -11,6 +11,7 @@ console.log("Server up and running, listening on port 8080");
 var rooms = {};
 //Global user object, since we want to know what rooms each user is in etc.
 var users = {};
+var ops = {};
 
 //Default room.
 rooms.lobby = new Room();
@@ -56,8 +57,6 @@ io.sockets.on('connection', function (socket) {
 				rooms[room].setPassword(pass);
 			}
 			// Keep track of the room in the user object.
-					console.log(users);
-
 			users[socket.username].channels[room] = room;
 			// Send the room information to the client.
 			if (fn) {
@@ -142,7 +141,7 @@ io.sockets.on('connection', function (socket) {
 		//If user exists in global user list.
 		if(users[msgObj.nick] !== undefined) {
 			//Send the message only to this user.
-			users[msgObj.nick].socket.emit('recv_privatemsg', socket.username, msgObj.message);
+		    users[msgObj.nick].socket.emit('recv_privatemsg', socket.username, msgObj.message);
 			//Callback recieves true.
 			fn(true);
 		}
@@ -162,8 +161,10 @@ io.sockets.on('connection', function (socket) {
 	});
 
 	// when the user disconnects.. perform this
-	socket.on('disconnect', function(){
+	socket.on('logout', function(){
+		console.log("Disconnecting..");
 		if(socket.username) {
+			console.log("Disconnecting part 2..");
 			//If the socket doesn't have a username the client joined and parted without
 			//chosing a username, so we just close the socket without any cleanup.
 			for(var room in users[socket.username].channels) {
@@ -174,6 +175,7 @@ io.sockets.on('connection', function (socket) {
 			}
 
 			//Broadcast the the user has left the channels he was in.
+			console.log("Disconnecting messaging quit");
 			io.sockets.emit('servermessage', "quit", users[socket.username].channels, socket.username);
 			//Remove the user from the global user roster.
 			delete users[socket.username];
