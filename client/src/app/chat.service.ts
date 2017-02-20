@@ -103,16 +103,16 @@ export class ChatService {
 
   sendPrivateMsg(message: string, user: string): Observable<any> {
 
-    interface msgObj {
+    interface MsgObj {
       nick: string;
       message: string;
     }
-    const msgObj: msgObj = { nick: user, message: message };
+    const MsgObj: MsgObj = { nick: user, message: message };
     const observable = new Observable(observer => {
-      this.socket.emit('privatemsg', msgObj, function (success) {
+      this.socket.emit('privatemsg', MsgObj, function (success) {
         observer.next(success);
-      })
-    })
+      });
+    });
     return observable;
   }
 
@@ -161,7 +161,7 @@ export class ChatService {
   listenKicked(): Observable<any> {
     const observable = new Observable(observer => {
       this.socket.on('kicked', function (room, user, username) {
-        console.log("user kicked out: " + user);
+        console.log('user kicked out: ' + user);
         observer.next(user);
       });
     });
@@ -171,7 +171,7 @@ export class ChatService {
   listenBanned(): Observable<any> {
     const observable = new Observable(observer => {
       this.socket.on('banned', function (room, user, username) {
-        console.log("user banned: " + user);
+        console.log('user banned: ' + user);
         observer.next(user);
       });
     });
@@ -198,7 +198,7 @@ export class ChatService {
   listenPrivateMessage(): Observable<any> {
     const observable = new Observable(observer => {
       this.socket.on('recv_privatemsg', function (user, message) {
-        let msg = 'privat message from ' + user + ': ' + message;
+        const msg = 'privat message from ' + user + ': ' + message;
         observer.next(msg);
       });
     });
@@ -224,7 +224,7 @@ export class ChatService {
 
   disconnectUser(): Observable<any> {
     const observable = new Observable(observer => {
-      this.socket.emit("logout");
+      this.socket.emit('logout');
       this.socket.on('servermessage', function (text, rooms, username) {
         console.log(text);
         observer.next(text);

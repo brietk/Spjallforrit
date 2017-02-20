@@ -29,13 +29,12 @@ export class RoomComponent implements OnInit {
 
   ngOnInit() {
     this.loggedInUser = this.appComponent.globalUserName;
-    console.log("Hi! I am " + this.loggedInUser);
+    console.log('Hi! I am ' + this.loggedInUser);
     console.log('þetta fer þangað' + this.route.snapshot.params['id']);
     const id = this.route.snapshot.params['id'];
     this.room = id;
     this.chatService.joinRoom(this.room).subscribe(success => {
       this.isBanned = !success;
-      
       console.log('objResponse type: ' + typeof success);
       if (typeof success === 'boolean') {
         console.log('In ngOnInit:' + success);
@@ -75,8 +74,9 @@ export class RoomComponent implements OnInit {
       for (const currUser in userArr.ops) {
         if (userArr.ops.hasOwnProperty(currUser)) {
           this.opsList.push(currUser);
-          if (currUser === this.loggedInUser)
+          if (currUser === this.loggedInUser) {
             this.isOps = true;
+          }
           console.log('OPS: key is: ' + currUser + ', value is: ' + userArr.ops[currUser]);
         }
       }
@@ -92,17 +92,17 @@ export class RoomComponent implements OnInit {
   }
 
   kickUserFromRoom(user: string) {
-    console.log("inni í kickUserFromRoom");
+    console.log('inni í kickUserFromRoom');
     this.chatService.kickFromRoom(this.room, user).subscribe(success => {
-      console.log("uppl úr room: " + success);
-    })
+      console.log('uppl úr room: ' + success);
+    });
   }
 
   banUserFromRoom(user: string) {
-    console.log("inni í banUserFromRoom");
+    console.log('inni í banUserFromRoom');
     this.chatService.banFromRoom(this.room, user).subscribe(success => {
-      console.log("uppl úr room: " + success);
-    })
+      console.log('uppl úr room: ' + success);
+    });
   }
 
   SendMessage(text: string) {
@@ -111,7 +111,7 @@ export class RoomComponent implements OnInit {
     }
     console.log('Sending: ' + text);
     this.chatService.sendMsg(text, this.room).subscribe(success => {
-      console.log("Message sent: " + success);
+      console.log('Message sent: ' + success);
     });
   }
 }

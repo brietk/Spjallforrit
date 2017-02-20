@@ -40,17 +40,19 @@ export class RoomlistComponent implements OnInit {
   }
 
   OnLogout() {
-    console.log("onlogout");
+    console.log('onlogout');
     this.chatService.disconnectUser().subscribe(text => {
       console.log('disconnecting: ' + text);
-      if (text === "quit")
+      if (text === 'quit') {
         this.router.navigate(['/login']);
+      }
     });
   }
 
   SendPrivateMessage() {
     this.chatService.sendPrivateMsg(this.privateMsg, this.selectedUser).subscribe(text => {
       console.log('SendPrivateMessage: ' + text);
+      this.privateMsg = '';
     });
   }
 }
