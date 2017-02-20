@@ -1,35 +1,38 @@
-{{room}}
+<h2>Current chat room</h2>
 
-<button type="button" (click)="partRoom()">
-    Leave chat
-  </button>
+<ul>
+  <li>
+    {{room}} <button type="button" (click)="partRoom()">Leave chat room</button>
+  </li>
+</ul>
 
-<h2 *ngIf="isBanned">You have been banned from this room</h2>
+<h3 *ngIf="isBanned">You have been banned from this room</h3>
 
 
 <div *ngIf="!isBanned">
-  <h1>Users in room:</h1>
-  <li *ngFor="let user of opsList">
-    <b>{{user}}</b>
-  </li>
+  <h2>Users in room:</h2>
+  <ul>
+    <li *ngFor="let user of opsList">
+      <b>{{user}}</b>
+    </li>
+  </ul>
 
-  <li *ngFor="let user of userList">
-    {{user}}
-    <button type="button" *ngIf="isOps" (click)="kickUserFromRoom(user)">
-          Kick out
-        </button>
-    <button type="button" *ngIf="isOps" (click)="banUserFromRoom(user)">
-          Ban user
-        </button>
-  </li>
+  <ul>
+    <li *ngFor="let user of userList">
+      {{user}}
+      <button type="button" *ngIf="isOps" (click)="kickUserFromRoom(user)">Kick out</button>
+      <button type="button" *ngIf="isOps" (click)="banUserFromRoom(user)">Ban user</button>
+    </li>
+  </ul>
+  <h2>Messages</h2>
+  <h4 *ngIf="obMsgs === undefined">No messages yet</h4>
+  <ul>
+    <li *ngFor="let msg of obMsgs">
+      [{{msg.nick}} {{msg.timestamp | date:'hh:mm:ss'}}] {{msg.message}}
+    </li>
+  </ul>
 
-  <h1>Messages:</h1>
-  <li *ngFor="let msg of obMsgs">
-    [{{msg.nick}} {{msg.timestamp | date:'hh:mm:ss'}}] {{msg.message}}
-  </li>
   <br /><br />
-  <input type="text" [(ngModel)]="textMessage" />
-  <button type="button" (click)="SendMessage()">
-    Send message
-  </button>
+  <input type="text" placeholder="Type new message" [(ngModel)]="textMessage" />
+  <button type="button" (click)="SendMessage()">Send message</button>
 </div>

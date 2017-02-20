@@ -1,62 +1,45 @@
-<!--
+<table border="0">
+  <tr>
+    <td valign="top">
+      <h2>Available Chatrooms</h2>
+      <h4>Press room name to join chat</h4>
+      <ul>
+        <li *ngFor="let room of rooms">
+          <a [routerLink]="['/room', room]">
+            {{room}}
+          </a>
+        </li>
+      </ul>
 
-  <table>
-  <tr *ngFor="let room of rooms">
-    <td>{{room}}</td>
-    <td><button (click)="OnJoin(room)">Join</button></td>
+      <hr />
+
+      <h2>Create new Chatroom</h2>
+      <h4>Type room name to create a new chat</h4>
+
+      <input type="text" #roomname placeholder='Name of new chatroom' [(ngModel)]="roomName" />
+      <button (click)="OnJoin()">Join new room</button>
+      <hr />
+      <button (click)="OnLogout()">Logout</button>
+    </td>
+    <td>&nbsp;&nbsp;</td>
+    <td valign="top">
+      <h2>Private messages</h2>
+      <h4>Select an online user and have with him clever conversation</h4>
+      <table>
+        <tr *ngFor="let prvMsg of privateMessages">
+          <td>{{prvMsg}}</td>
+        </tr>
+      </table>
+
+      <select [(ngModel)]="selectedUser" style="width: 204px; height: 20px;">
+        <option selected disabled value="">--- Please select User ---</option>
+        <option default="Select user" *ngFor="let user of users" [ngValue]="user">{{user}}</option>
+      </select>
+      <div>
+        <input type="text" #privatemsg placeholder="Private message" style="width: 200px;" [(ngModel)]="privateMsg" />
+        <button (click)="SendPrivateMessage()">Send message</button>
+        <button (click)="ClearPrivateMessages()">Clear messages</button>
+      </div>
+    </td>
   </tr>
 </table>
-
-
-<li *ngFor="let room of rooms">
-    <a [routeLink]="['/rooms', room.id]">
-        {{userName}}
-    </a>
-</li>
--->
-
-<h4>
-  These are available chatrooms. Feel free to join and chat.
-</h4>
-<li *ngFor="let room of rooms">
-  <a [routerLink]="['/room', room]">
-        {{room}}
-    </a>
-</li>
-
-<hr />
-
-<h4>
-  To open a new chatroom, type room name and press "Join new room".
-</h4>
-
-<input type="text" #roomname placeholder="Name of new chatroom" [(ngModel)]="roomName" />
-<button (click)="OnJoin()">
-    Join new room
-  </button>
-
-<hr />
-<h4>Users currently logged in Chat World</h4>
-
-<table>
-  <tr *ngFor="let user of users">
-    <td>{{user}}</td>
-  </tr>
-</table>
-
-<h1>Send private message</h1>
-
-<select [(ngModel)]="selectedUser" style="width: 204px; height: 20px;">
-<option default="Select user" *ngFor="let user of users" [ngValue]="user">{{user}}</option>
-</select>
-
-
-<div>
-  <input type="text" #privatemsg placeholder="Private message" style="width: 200px;" [(ngModel)]="privateMsg" />
-<button (click)="SendPrivateMessage()">
-    Send message
-  </button>
-</div>
-<hr />
-
-<button (click)="OnLogout()">Logout</button>

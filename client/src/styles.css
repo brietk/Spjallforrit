@@ -1,12 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
 html
 {
-   font-family: Tahoma;
-   margin-left: 100px;
-   margin-top: 100px;
+   margin-left: 20px;
+   margin-top: 20px;
    background-color: pink;
+   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 h1{
     color: deeppink;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 24px;
+}
+h2{
+    color: deeppink;
+    font-size: 18px;
+}
+h4{
+    font-size: 12px;
+}
+
+ul{
+    list-style-type : none;
+}
+
+button{
+    background-color: deeppink;
+    color: white;
+    border-radius: 4px;
+    border-style: solid;
+    border-color: deeppink;
 }

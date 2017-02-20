@@ -6,7 +6,9 @@ import { Router } from '@angular/router';
   selector: 'app-roomlist',
   templateUrl: './roomlist.component.html',
   styleUrls: ['./roomlist.component.css']
+
 })
+
 
 export class RoomlistComponent implements OnInit {
   roomName: string;
@@ -15,10 +17,13 @@ export class RoomlistComponent implements OnInit {
   users: string[];
   joined: boolean;
   selectedUser: string;
+  privateMessages: string[];
 
   constructor(private chatService: ChatService, private router: Router) { }
 
   ngOnInit() {
+    this.selectedUser = '';
+    this.privateMessages = [];
     this.chatService.getUserList().subscribe(lst => {
       console.log('updating users');
       this.users = lst;
@@ -28,7 +33,8 @@ export class RoomlistComponent implements OnInit {
       this.rooms = lst;
     });
     this.chatService.listenPrivateMessage().subscribe(msg => {
-      alert(msg);
+      console.log('Got private message from: ' + msg);
+      this.privateMessages.push(msg);
     });
   }
 
@@ -50,9 +56,14 @@ export class RoomlistComponent implements OnInit {
   }
 
   SendPrivateMessage() {
+    const msg = 'From me to ' + this.selectedUser + ': ' + this.privateMsg;
+    this.privateMessages.push(msg);
     this.chatService.sendPrivateMsg(this.privateMsg, this.selectedUser).subscribe(text => {
       console.log('SendPrivateMessage: ' + text);
       this.privateMsg = '';
     });
+  }
+  ClearPrivateMessages() {
+    this.privateMessages = [];
   }
 }

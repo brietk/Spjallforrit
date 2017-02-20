@@ -198,7 +198,8 @@ export class ChatService {
   listenPrivateMessage(): Observable<any> {
     const observable = new Observable(observer => {
       this.socket.on('recv_privatemsg', function (user, message) {
-        const msg = 'privat message from ' + user + ': ' + message;
+        const msg = 'From ' + user + ' to me: ' + message;
+        console.log(msg);
         observer.next(msg);
       });
     });
